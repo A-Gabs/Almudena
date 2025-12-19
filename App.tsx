@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Link } from 'react-router-dom';
 import Header from './components/Header';
 import CategoryBar from './components/CategoryBar';
 import ProductCard from './components/ProductCard';
@@ -57,12 +57,12 @@ const App: React.FC = () => {
       <footer className="bg-gray-100 py-16 mt-20 border-t border-gray-200">
         <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12">
           <div>
-            <div className="flex flex-col mb-6">
-              <h1 className="text-2xl font-black italic tracking-tighter text-red-600">
+            <Link to="/" className="flex flex-col mb-6 group w-fit">
+              <h1 className="text-2xl font-black italic tracking-tighter text-red-600 transition-transform group-hover:scale-[1.02]">
                 ALMUDENA
               </h1>
-              <div className="h-1 w-16 bg-red-600 rounded-full mt-[-2px]"></div>
-            </div>
+              <div className="h-1 w-16 bg-red-600 rounded-full mt-[-2px] transition-all group-hover:w-full"></div>
+            </Link>
             <p className="text-sm text-gray-500 leading-relaxed">
               La mejor pastelería fina, hecha con los mejores ingredientes y mucho amor. Encuentra tortas, galletas y más.
             </p>

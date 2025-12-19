@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { ChevronDown } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { PRIMARY_RED, NAV_ITEMS } from '../constants';
 
 const Header: React.FC = () => {
@@ -8,12 +9,12 @@ const Header: React.FC = () => {
     <header className="bg-white shadow-sm sticky top-0 z-50">
       {/* Centered Brand Name */}
       <div className="container mx-auto px-4 py-6 flex justify-center">
-        <div className="flex flex-col items-center">
-          <h1 className="text-4xl font-black italic tracking-tighter" style={{ color: PRIMARY_RED }}>
+        <Link to="/" className="flex flex-col items-center group cursor-pointer">
+          <h1 className="text-4xl font-black italic tracking-tighter transition-transform group-hover:scale-[1.02]" style={{ color: PRIMARY_RED }}>
             ALMUDENA
           </h1>
-          <div className="h-1.5 w-full bg-red-600 rounded-full mt-[-4px]"></div>
-        </div>
+          <div className="h-1.5 w-full bg-red-600 rounded-full mt-[-4px] transition-transform group-hover:scale-x-110"></div>
+        </Link>
       </div>
 
       {/* Navigation Menu */}
