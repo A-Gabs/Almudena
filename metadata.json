@@ -1,0 +1,7 @@
+{
+  "name": "Almudena Pastelería",
+  "description": "A high-end pastry shop web application inspired by Maria Almenara, featuring a wide range of cakes, cookies, and catering services.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
