@@ -1,56 +1,58 @@
 
-import React, { useState } from 'react';
+import React from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import CategoryBar from './components/CategoryBar';
 import ProductCard from './components/ProductCard';
 import ProductDetail from './components/ProductDetail';
 import { PRODUCTS } from './constants';
-import { Product } from './types';
+
+const HomePage: React.FC = () => {
+  return (
+    <>
+      <CategoryBar />
+      <main className="container mx-auto px-4 py-8 lg:py-12 animate-fade-in">
+        <div className="mb-8 lg:mb-12">
+          <h2 className="text-3xl lg:text-4xl font-black uppercase tracking-tight text-gray-900 mb-1">
+            Tortas
+          </h2>
+          <p className="text-gray-400 font-semibold text-sm">
+            12 porciones - 21 cms de diámetro aprox
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8">
+          {PRODUCTS.map(product => (
+            <ProductCard 
+              key={product.id} 
+              product={product} 
+            />
+          ))}
+        </div>
+      </main>
+    </>
+  );
+};
 
 const App: React.FC = () => {
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const location = useLocation();
 
-  const handleViewDetail = (product: Product) => {
-    setSelectedProduct(product);
+  // Scroll to top on every route change
+  React.useEffect(() => {
     window.scrollTo(0, 0);
-  };
-
-  const handleBack = () => {
-    setSelectedProduct(null);
-  };
+  }, [location.pathname]);
 
   return (
-    <div className="min-h-screen bg-[#FDFDFD]">
+    <div className="min-h-screen bg-[#FDFDFD] flex flex-col">
       <Header />
       
-      {!selectedProduct && <CategoryBar />}
-      
-      <main className="container mx-auto px-4 py-8 lg:py-12">
-        {selectedProduct ? (
-          <ProductDetail product={selectedProduct} onBack={handleBack} />
-        ) : (
-          <>
-            <div className="mb-8 lg:mb-12">
-              <h2 className="text-3xl lg:text-4xl font-black uppercase tracking-tight text-gray-900 mb-1">
-                Tortas
-              </h2>
-              <p className="text-gray-400 font-semibold text-sm">
-                12 porciones - 21 cms de diámetro aprox
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8">
-              {PRODUCTS.map(product => (
-                <ProductCard 
-                  key={product.id} 
-                  product={product} 
-                  onViewMore={() => handleViewDetail(product)}
-                />
-              ))}
-            </div>
-          </>
-        )}
-      </main>
+      <div className="flex-1">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/producto/:id" element={<ProductDetail />} />
+          <Route path="*" element={<HomePage />} />
+        </Routes>
+      </div>
 
       <footer className="bg-gray-100 py-16 mt-20 border-t border-gray-200">
         <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12">

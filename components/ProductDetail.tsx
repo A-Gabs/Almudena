@@ -1,17 +1,30 @@
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { ChevronLeft, ChevronRight, Heart, Minus, Plus } from 'lucide-react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Product } from '../types';
+import { PRODUCTS } from '../constants';
 
-interface ProductDetailProps {
-  product: Product;
-  onBack: () => void;
-}
+const ProductDetail: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  
+  const product = useMemo(() => {
+    return PRODUCTS.find(p => p.id === id);
+  }, [id]);
 
-const ProductDetail: React.FC<ProductDetailProps> = ({ product, onBack }) => {
   const [quantity, setQuantity] = useState(1);
   const [dedication, setDedication] = useState('');
   const [isLiked, setIsLiked] = useState(false);
+
+  if (!product) {
+    return (
+      <div className="container mx-auto px-4 py-20 text-center">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">Producto no encontrado</h2>
+        <Link to="/" className="text-red-600 font-bold hover:underline">Volver al catálogo</Link>
+      </div>
+    );
+  }
 
   const handleQuantityChange = (type: 'inc' | 'dec') => {
     if (type === 'inc') setQuantity(q => q + 1);
@@ -26,7 +39,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onBack }) => {
         <div className="relative group">
           {/* Botón atrás flotante en móvil o superior */}
           <button 
-            onClick={onBack}
+            onClick={() => navigate('/')}
             className="absolute top-4 left-4 z-20 bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-md lg:hidden"
           >
             <ChevronLeft className="w-5 h-5 text-gray-800" />
@@ -67,13 +80,13 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onBack }) => {
 
         {/* Lado Derecho: Información */}
         <div className="flex flex-col space-y-6 lg:space-y-8 pt-4">
-          <button 
-            onClick={onBack}
+          <Link 
+            to="/"
             className="hidden lg:flex items-center gap-1 text-gray-500 hover:text-red-600 transition-colors font-medium text-sm"
           >
             <ChevronLeft className="w-4 h-4" />
             Atrás
-          </button>
+          </Link>
 
           <div className="space-y-4">
             <h1 className="text-3xl lg:text-4xl font-extrabold text-gray-900 leading-tight">
@@ -94,7 +107,9 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onBack }) => {
               <h4 className="font-extrabold text-gray-900 text-[13px] uppercase tracking-wide">
                 ¿deseas colocar una dedicatoria?
               </h4>
-              <span className="bg-gray-200 px-2.5 py-0.5 rounded-lg text-[10px] font-black text-gray-500">0/1</span>
+              <span className="bg-gray-200 px-2.5 py-0.5 rounded-lg text-[10px] font-black text-gray-500">
+                {dedication.length > 0 ? '1/1' : '0/1'}
+              </span>
             </div>
             
             <div className="relative">

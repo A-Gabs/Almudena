@@ -30,6 +30,13 @@
             transform: translateY(0);
             transition: opacity 300ms, transform 300ms;
         }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
     </style>
 <script type="importmap">
 {
@@ -37,6 +44,8 @@
     "react/": "https://esm.sh/react@^19.2.3/",
     "react": "https://esm.sh/react@^19.2.3",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react-dom": "https://esm.sh/react-dom@^19.2.3",
+    "react-router-dom": "https://esm.sh/react-router-dom@6.22.3",
     "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
   }
 }
